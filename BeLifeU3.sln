@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeLifeU3", "BeLifeU3\BeLifeU3.csproj", "{10DC486C-7A89-4744-963F-6AEFC9939516}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentacionBL", "BeLifeU3\PresentacionBL.csproj", "{10DC486C-7A89-4744-963F-6AEFC9939516}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatosDB", "DatosDB\DatosDB.csproj", "{5F68141E-1A28-47A0-9410-0AC57462B49B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegocioBL", "NegocioBL\NegocioBL.csproj", "{CA09EACD-596C-435A-BAE1-DD1A959FD1AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{10DC486C-7A89-4744-963F-6AEFC9939516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10DC486C-7A89-4744-963F-6AEFC9939516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10DC486C-7A89-4744-963F-6AEFC9939516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F68141E-1A28-47A0-9410-0AC57462B49B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F68141E-1A28-47A0-9410-0AC57462B49B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F68141E-1A28-47A0-9410-0AC57462B49B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F68141E-1A28-47A0-9410-0AC57462B49B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA09EACD-596C-435A-BAE1-DD1A959FD1AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA09EACD-596C-435A-BAE1-DD1A959FD1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA09EACD-596C-435A-BAE1-DD1A959FD1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA09EACD-596C-435A-BAE1-DD1A959FD1AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
