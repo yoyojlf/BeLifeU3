@@ -162,5 +162,9 @@
   <ItemGroup>
     <Resource Include="Imagenes\Contrato_delete.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\Cliente.png" />
+    <Resource Include="Imagenes\Contrato.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

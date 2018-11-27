@@ -8,23 +8,30 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:BeLifeU3"
         mc:Ignorable="d"
-        Title="BeLifeWindows" Height="450" Width="690" Background="Purple">
+        Title="BeLifeWindows" Height="450" Width="690" Background="Purple" WindowStartupLocation="CenterScreen">
     <Grid>
         <Controls:MetroTabControl Name="TbBeLife" >
-            <Controls:MetroTabItem Margin="0,0,-28,0"  BorderBrush="White">
-                <Controls:MetroTabItem.Background>
-                    <ImageBrush ImageSource="Imagenes/Home.png"/>
-                </Controls:MetroTabItem.Background>
+            <Controls:MetroTabItem Margin="0,0,-59,0" Background="Purple" BorderBrush="White" Header="Home">
+
+                
+                
                 <Grid Background="Gainsboro">
-                    <Controls:Tile Name="ClientesWin" Margin="98,49,554,191" Title="Clientes">
-                        <Image Source="Imagenes/Clientes.png"></Image>
+                    <Controls:Tile Name="ListClientesWin" Margin="88,60,454,57" Title="Lista Clientes" Height="Auto" Click="ListClientesWin_Click">
+                        <Image Source="Imagenes/Clientes.png" Height="101" Width="111"></Image>
                     </Controls:Tile>
-                    <Controls:Tile Name="ContratoWin" Title="Contrato" RenderTransformOrigin="0.857,0.207" Margin="292,49,360,191">
-                        <Image Source="Imagenes/Contratos.png"></Image>
+                    <Controls:Tile Name="ManClienteWin" Title="Cliente" Height="Auto" Margin="253,60,243,199" Width="Auto" Click="ManClienteWin_Click">
+                        <Image Source="Imagenes/Cliente.png" Height="91" Width="97"></Image>
+                    </Controls:Tile>
+                    <Controls:Tile Name="LisContratoWin" Title="Lista Contratos" RenderTransformOrigin="0.857,0.207" Margin="467,60,75,57" Height="Auto" Click="LisContratoWin_Click">
+                        <Image Source="Imagenes/Contratos.png" Height="106" Width="140"></Image>
+                    </Controls:Tile>
+                    <Controls:Tile x:Name="ManContratoWin" Title="Contrato" Height="Auto" Margin="253,205,243,57" Width="Auto" Click="ManContratoWin_Click">
+                        <Image Source="Imagenes/Contrato.png" Height="89" Width="93"></Image>
                     </Controls:Tile>
                 </Grid>
             </Controls:MetroTabItem>
-            <Controls:MetroTabItem Header="MantCliente" Margin="31,0,-1,0">
+            <Controls:MetroTabItem  Margin="31,0,-1,0" Background="Transparent">
+                <!--Header="MantCliente"-->
                 <Grid Background="Gainsboro">
                     <Label HorizontalAlignment="Left" Margin="82,106,0,0" VerticalAlignment="Top"/>
                     <Label Content="Nombre" HorizontalAlignment="Left" Margin="82,106,0,0" VerticalAlignment="Top"/>
@@ -53,7 +60,8 @@
                     </Controls:Tile>
                 </Grid>
             </Controls:MetroTabItem>
-            <Controls:MetroTabItem Header="Lista Clien" Margin="2,0,-2,0">
+            <Controls:MetroTabItem  Margin="2,0,-2,0" Background="Transparent">
+                <!--Header="Lista Clien"-->
                 <Grid Background="Gainsboro">
                     <Label Content="Rut" HorizontalAlignment="Left" Margin="82,59,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="TxtRutList" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="11111111-1" HorizontalAlignment="Left" Height="23" Margin="82,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="10"/>
@@ -95,7 +103,8 @@
                     </DataGrid>
                 </Grid>
             </Controls:MetroTabItem>
-            <Controls:MetroTabItem Header="Contrato" >
+            <Controls:MetroTabItem  Background="Transparent">
+                <!--Header="Contrato"-->
                 <Grid Background="Gainsboro">
                     <Label Content="Nº Contrato" Margin="53,53,554,302" />
                     <TextBox x:Name="TxtNumeroContrato" Margin="53,78,478,276"  IsUndoEnabled="False" MaxLines="2147483646" >
@@ -106,7 +115,7 @@
                     <Controls:Tile Name="BtnBuscarContrato" Height="Auto" Width="Auto" Title="Buscar" Click="BtnBuscarContrato_Click" Margin="238,76,310,276" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Contrato_search.png"></Image>
                     </Controls:Tile>
-                    <Controls:Tile Name="BtnListaContrato" Height="Auto" Width="Auto" Title="Lista" Click="BtnListaContrato_Click" Margin="238,135,310,217" FontSize="11" TitleFontSize="12">
+                    <Controls:Tile Name="BtnListaContrato" Height="Auto" Width="Auto" Title="Lista" Click="LisContratoWin_Click" Margin="238,135,310,217" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Contratos.png"></Image>
                     </Controls:Tile>
                     <Label Content="Rut" RenderTransformOrigin="-0.054,0.535" Margin="53,109,591,246" />
@@ -174,11 +183,57 @@
                         </CheckBox>
                         <Label Content="Observaciones" HorizontalAlignment="Left" Margin="22,196,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="TxtContratoObserva" HorizontalAlignment="Left" Margin="27,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="62" Width="191" Foreground="#FF7E3B82" Background="White" IsEnabled="True">
-                            
+
                             <!--<Run Text="Sin pre"/><Run Text="-"/><Run Text="exi"/><Run Text="s"/><Run Text="tencia"/>-->
                         </TextBox>
 
                     </Grid>
+                </Grid>
+            </Controls:MetroTabItem>
+            <Controls:MetroTabItem Background="Transparent" >
+                <Grid Background="Gainsboro">
+                    <Label Content="Rut" HorizontalAlignment="Left" Margin="26,59,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="TxtRutListCon" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="11111111-1" HorizontalAlignment="Left" Height="23" Margin="26,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="10"/>
+
+                    <Label  Content="N° Contrato"   FontSize="14" Margin="169,59,473,295"/>
+                    <TextBox  x:Name="TxtNContratoList" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="20180101000101"  Margin="169,85,384,269"   >
+                        <!--SelectionChanged="CbSexoListaCli_SelectionChanged"-->
+
+                    </TextBox>
+
+                    <Label  Content="Poliza"  Margin="324,59,278,295"/>
+                    <ComboBox  x:Name="CbPlanPoliza" SelectedIndex="0"  Margin="324,85,229,269"   >
+                        <!--SelectionChanged="CbEstadoCivilListaCli_SelectionChanged"-->
+                    </ComboBox>
+                    <Controls:Tile Name="BtnFiltrarContratos" Title="Filtrar" Click="BtnFiltrarContratos_Click" Margin="514,85,28,264" Height="Auto" Width="Auto">
+                        <Image Source="Imagenes/Filter.png"></Image>
+                    </Controls:Tile>
+
+                    <DataGrid x:Name="DgContratos" HorizontalAlignment="Left" Height="199" Margin="23,154,0,0" VerticalAlignment="Top"  SelectionChanged="DgContratos_SelectionChanged" Background="#FF5B4660" OpacityMask="White" CanUserAddRows="False" CanUserDeleteRows="False" RenderTransformOrigin="0.5,0.5" AutoGenerateColumns="False" Width="636">
+                        <DataGrid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="1.123"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0.98"/>
+                            </TransformGroup>
+                        </DataGrid.RenderTransform>
+                        <!--<DataGrid.Effect>
+                            <DropShadowEffect/>
+                        </DataGrid.Effect>-->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Numero Cont" Binding="{Binding Numero}"/>
+                            <DataGridTextColumn Header="Fecha Creacion" Binding="{Binding FechaCreacion}"/>
+                            <DataGridTextColumn Header="Rut Cliente" Binding="{Binding RutCliente}"/>
+                            <DataGridTextColumn Header="Inicio Vigencia" Binding="{Binding FechaInicioVigencia}"/>
+                            <DataGridTextColumn Header="Fin Vigencia" Binding="{Binding FechaFinVigencia}"/>
+                            <DataGridTextColumn Header="Vigente" Binding="{Binding Vigente}"/>
+                            <DataGridTextColumn Header="Declara Salud" Binding="{Binding DeclaracionSalud}"/>
+                            <DataGridTextColumn Header="Prima anual" Binding="{Binding PrimaAnual}"/>
+                            <DataGridTextColumn Header="Prima Mensual" Binding="{Binding PrimaMensual}"/>
+                            <DataGridTextColumn Header="Observaciones" Binding="{Binding Observaciones}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Controls:MetroTabItem>
         </Controls:MetroTabControl>

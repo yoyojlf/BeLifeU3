@@ -46,9 +46,16 @@ namespace NegocioBL
                 }
                 else
                 {
-                    if (value == false && (DateTime.Today < FechaFinVigencia || DateTime.Today >= FechaInicioVigencia))
+                    if(value == false && DateTime.Today >= FechaFinVigencia)
                     {
-                        vigente = true;
+                        vigente = value;
+                    }
+                    else
+                    {
+                        if (value == false && (DateTime.Today < FechaFinVigencia || DateTime.Today >= FechaInicioVigencia))
+                        {
+                            vigente = true;
+                        }
                     }
                 }
             }
@@ -240,6 +247,10 @@ namespace NegocioBL
             try
             {
                 DatosDB.Contrato contrato = Conexion.Contexto.Contrato.First(c => c.Numero == Numero);
+                if (!contrato.Vigente)
+                {
+                    throw new ArgumentException("Contrato terminado, no puede modificar un contrato retminado");
+                }
                 LeerClientePlan();
                 CommonBC.Syncronize(this, contrato);
 

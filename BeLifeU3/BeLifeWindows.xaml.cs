@@ -280,7 +280,7 @@ namespace BeLifeU3
         }
 
         //Logica del filtro
-        private void UltimateFilter()
+        private async void UltimateFilter()
         {
             Cliente FiltroClie = new Cliente();
             try
@@ -288,11 +288,10 @@ namespace BeLifeU3
                 if (!TxtRutList.Text.Equals(string.Empty))
                 {
                     DgClientes.ItemsSource = FiltroClie.ReadAll().Where(r => r.RutCliente == TxtRutList.Text);
-                    MessageBox.Show("Filtro por rut");
-                    MessageBox.Show("" + DgClientes.Items.Count);
+                   
                     if (DgClientes.Items.Count == 0)
                     {
-                        MessageBox.Show("no existe cliente con ese rut " + TxtRutList.Text);
+                        await this.ShowMessageAsync("Error","no existe cliente con este rut " + TxtRutList.Text);
                         DgClientes.ItemsSource = FiltroClie.ReadAll();
                     }
                 }
@@ -317,7 +316,7 @@ namespace BeLifeU3
                         // lruits1.Where(product => !fruits2Names.Contains(product.Name));
                         //DgClientes.ItemsSource = FiltroClie.ReadAllBySexo().Where(a =>  FiltroClie.ReadAllByEstadoCivil().Contains(a));
                         //DgClientes.ItemsSource = FiltroClie.ReadAllBySexo().Join(FiltroClie.ReadAllByEstadoCivil(), a = > a.RutCliente = RutCliente);
-                        MessageBox.Show("Filtro por estado civil y sexo");
+                        
 
                     }
                     else
@@ -329,20 +328,20 @@ namespace BeLifeU3
 
                                 FiltroClie.IdEstadoCivil = (int)CbEstadoCivilListaCli.SelectedValue;
                                 DgClientes.ItemsSource = FiltroClie.ReadAllByEstadoCivil();
-                                MessageBox.Show("Filtro solo estado civil");
+                               
                             }
                             if (((int)CbSexoListaCli.SelectedIndex > -1 && (int)CbSexoListaCli.SelectedValue != 0))
                             {
                                 FiltroClie.IdSexo = (int)CbSexoListaCli.SelectedValue;
 
                                 DgClientes.ItemsSource = FiltroClie.ReadAllBySexo();
-                                MessageBox.Show("Filtro solo sexo");
+                                
                             }
                         }
                         else
                         {
                             DgClientes.ItemsSource = FiltroClie.ReadAll();
-                            MessageBox.Show("sin Filtro");
+                            await this.ShowMessageAsync("","sin Filtro");
                         }
                     }
 
@@ -350,7 +349,7 @@ namespace BeLifeU3
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Durante el filtrado se produjo una excepsion: Detalle --> " + ex);
+                await this.ShowMessageAsync("ERROR","Durante el filtrado se produjo una excepsion: Detalle --> " + ex);
             }
         }
 
@@ -396,6 +395,7 @@ namespace BeLifeU3
             ChBContratoSalud.IsChecked = contrato.DeclaracionSalud;
             CargarResumenPlan();
             TxtContratoObserva.Text = contrato.Observaciones;
+            TxtNumeroContrato.Text = contrato.Numero;
         }
 
         //carga combobox contrato
@@ -515,10 +515,7 @@ namespace BeLifeU3
         }
 
         //boton para abrir la ventana lista de contratos
-        private void BtnListaContrato_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
 
         //busca al cliente rut 
         private async void TxtContratoRut_TextChanged(object sender, TextChangedEventArgs e)
@@ -593,7 +590,7 @@ namespace BeLifeU3
                     }
                     else
                     {
-                        await this.ShowMessageAsync("ERROR!", "Contraro Numero: " + contrato.Numero + " no pudo ser actualizado!!");
+                        await this.ShowMessageAsync("ERROR!", "Contraro Numero: " + contrato.Numero + " no pudo ser actualizado!!\nVerifique que esté vigente!!");
                     }
                 }
                 else
@@ -622,7 +619,7 @@ namespace BeLifeU3
                 }
                 else
                 {
-                    await this.ShowMessageAsync("No Terminado", "Contrato numero: " + contrato.Numero + " no a sido  terminado");
+                    await this.ShowMessageAsync("No Terminado", "Contrato numero: " + contrato.Numero + " no se pudo terminar el contrato.\nPuede que el contrato ya haya sido terminado o no exista!!");
                 }
                 CargaContrato(contrato);
             }
@@ -657,5 +654,121 @@ namespace BeLifeU3
             
         }
         #endregion
+
+        #region Lista Contratos
+        //carga del listado de contratos
+        private void CargarListaContratos()
+        {
+            Contrato contrato = new Contrato();
+            DgContratos.ItemsSource = contrato.ReadAll();
+            DgContratos.Items.Refresh();
+        }
+
+        //llevar contrato seleccionado al mantenedor de contratos
+        private void DgContratos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = 0;
+            index = DgContratos.SelectedIndex;
+            if (index != -1)
+            {
+                DgContratos.Items[index].ToString();
+                Contrato contrato = new Contrato();
+                contrato = (Contrato)DgContratos.Items[index];
+                this.Limpiar();
+                CargaContrato(contrato);
+                TbBeLife.SelectedIndex = 3;
+                //TxtRut.Text = Clie.RutCliente;
+                //TxtNombre.Text = Clie.Nombres;
+                //TxtApellido.Text = Clie.Apellidos;
+                //CbSexo.SelectedValue = Clie.Sexo.IdSexo;
+                //CbEstadoCivil.SelectedValue = Clie.EstadoCivil.IdEstadoCivil;
+                //DpFechaNacimiento.SelectedDate = Clie.FechaNacimiento;
+            }
+        }
+
+        #endregion
+
+        private void ListClientesWin_Click(object sender, RoutedEventArgs e)
+        {
+            TbBeLife.SelectedIndex = 2;
+        }
+
+        private void ManClienteWin_Click(object sender, RoutedEventArgs e)
+        {
+            TbBeLife.SelectedIndex = 1;
+        }
+
+        private void LisContratoWin_Click(object sender, RoutedEventArgs e)
+        {
+            TbBeLife.SelectedIndex = 4;
+            CargarListaContratos();
+        }
+
+        private void ManContratoWin_Click(object sender, RoutedEventArgs e)
+        {
+            TbBeLife.SelectedIndex = 3;
+        }
+
+        //Logica del filtro
+        private async void UltimateFilterContrato()
+        {
+            Contrato FiltroContra = new Contrato();
+            try
+            {
+                if (!TxtRutListCon.Text.Equals(string.Empty))
+                {
+                    DgContratos.ItemsSource = FiltroContra.ReadAll().Where(r => r.RutCliente == TxtRutList.Text);
+
+                    if (DgClientes.Items.Count == 0)
+                    {
+                        await this.ShowMessageAsync("Error", "no existe contratos asociados con este rut " + TxtRutList.Text);
+                        DgClientes.ItemsSource = FiltroContra.ReadAll();
+                    }
+                }
+                else
+                {
+                    if (!TxtNContratoList.Text.Equals(string.Empty))
+                    {
+                        DgContratos.ItemsSource = FiltroContra.ReadAll().Where(r => r.Numero == TxtNContratoList.Text);
+
+                        if (DgClientes.Items.Count == 0)
+                        {
+                            await this.ShowMessageAsync("Error", "no existe contratos asociados con este numero " + TxtNContratoList.Text);
+                            DgClientes.ItemsSource = FiltroContra.ReadAll();
+                        }
+
+                    }
+                    else
+                    {
+                        if ((int)CbPlanPoliza.SelectedIndex > -1)
+                        {
+                            DgContratos.ItemsSource = FiltroContra.ReadAll().Where(r => r.CodigoPlan == CbPlanPoliza.SelectedValue.ToString());
+
+                            if (DgClientes.Items.Count == 0)
+                            {
+                                await this.ShowMessageAsync("Error", "no existe contratos asociados con esa poliza " );
+                                DgClientes.ItemsSource = FiltroContra.ReadAll();
+                            }
+                        }
+                        else
+                        {
+                            DgContratos.ItemsSource = FiltroContra.ReadAll();
+                            await this.ShowMessageAsync("", "sin Filtro");
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                await this.ShowMessageAsync("ERROR", "Durante el filtrado se produjo una excepsion: Detalle --> " + ex);
+            }
+        }
+
+
+        private void BtnFiltrarContratos_Click(object sender, RoutedEventArgs e)
+        {
+            UltimateFilterContrato();
+        }
     }
 }
