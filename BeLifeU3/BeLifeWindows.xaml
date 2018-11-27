@@ -173,10 +173,10 @@
 
                         </CheckBox>
                         <Label Content="Observaciones" HorizontalAlignment="Left" Margin="22,196,0,0" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="TxtBkContratoObserva" HorizontalAlignment="Left" Margin="27,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="62" Width="191" Foreground="#FF7E3B82" Background="White">
-                            <TextBlock.Effect>
-                                <DropShadowEffect/>
-                            </TextBlock.Effect><Run Text="Sin pre"/><Run Text="-"/><Run Text="exi"/><Run Text="s"/><Run Text="tencia"/></TextBlock>
+                        <TextBox x:Name="TxtContratoObserva" HorizontalAlignment="Left" Margin="27,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="62" Width="191" Foreground="#FF7E3B82" Background="White" IsEnabled="True">
+                            
+                            <!--<Run Text="Sin pre"/><Run Text="-"/><Run Text="exi"/><Run Text="s"/><Run Text="tencia"/>-->
+                        </TextBox>
 
                     </Grid>
                 </Grid>

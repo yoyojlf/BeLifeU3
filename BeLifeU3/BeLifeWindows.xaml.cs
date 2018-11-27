@@ -385,6 +385,19 @@ namespace BeLifeU3
         #endregion
 
         #region Ventana Contrato
+        //carga contrato
+        private void CargaContrato(Contrato contrato)
+        {
+            TxtContratoRut.Text = contrato.RutCliente;
+            CbContratoPlanes.SelectedValue = contrato.CodigoPlan;
+            CargarClienteContrato(ObtenerCliente(TxtContratoRut.Text));
+            DpContratoInicio.SelectedDate = contrato.FechaInicioVigencia;
+            ChBContratoEstaVigente.IsChecked = contrato.Vigente;
+            ChBContratoSalud.IsChecked = contrato.DeclaracionSalud;
+            CargarResumenPlan();
+            TxtContratoObserva.Text = contrato.Observaciones;
+        }
+
         //carga combobox contrato
         private void CargaCbContrato()
         {
@@ -442,27 +455,72 @@ namespace BeLifeU3
             }
             return Primaanual;            
         }
+
+        //Cargar Rssumen
+        private void CargarResumenPlan()
+        {
+            double PrimaAnual = 0.0d, PrimaMensual = 0.0d;
+            PrimaAnual = ObtenerPrima(ObtenerCliente(TxtContratoRut.Text));
+            PrimaMensual = (double)((Math.Truncate(PrimaAnual * 10.0)) / 10.0) / 12;
+            LbPrimaAnual.Content = PrimaAnual.ToString();
+            LbPrimaMensual.Content = PrimaMensual.ToString();
+        }
+
         //metodo para validar los datos del contrato actual retorna un objeto cliente
         private Contrato ObtenerContrato()
         {
             Contrato contrato = new Contrato();
+            contrato.RutCliente = TxtContratoRut.Text;
             contrato.CodigoPlan = CbContratoPlanes.SelectedValue.ToString();
             contrato.DeclaracionSalud = ChBContratoSalud.IsChecked.Value;
             contrato.FechaInicioVigencia = DpContratoInicio.SelectedDate.Value;
             contrato.DeclaracionSalud = ChBContratoSalud.IsChecked.Value;
+            contrato.Observaciones = TxtContratoObserva.Text;
             return contrato;
         }
 
-        private void BtnBuscarContrato_Click(object sender, RoutedEventArgs e)
+        //buscar contrato numero
+        private Contrato BuscarContratoNr(string numero)
         {
-
+            Contrato contrato = new Contrato();
+            if (!TxtNumeroContrato.Equals(string.Empty))
+            {
+                contrato.Numero = TxtNumeroContrato.Text;
+                if (contrato.Read())
+                {
+                    return contrato;
+                }
+                else
+                {
+                    throw new ArgumentException("El numero de contrato no coincide!!!, no existe!");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("No puede estar vacio el numero de contrato!!, al buscar!");
+            }
         }
 
+        //boton para buscar contrato
+        private async void BtnBuscarContrato_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CargaContrato(BuscarContratoNr(TxtNumeroContrato.Text));
+            }
+            catch (Exception ex)
+            {
+                await this.ShowMessageAsync("ERROR", "Error: " + ex.Message);
+            }
+        }
+
+        //boton para abrir la ventana lista de contratos
         private void BtnListaContrato_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        //busca al cliente rut 
         private async void TxtContratoRut_TextChanged(object sender, TextChangedEventArgs e)
         {
             Cliente clie = new Cliente();
@@ -497,19 +555,81 @@ namespace BeLifeU3
 
         }
 
-        private void BtnAgregarContrato_Click(object sender, RoutedEventArgs e)
+        //boton para agregar contrato
+        private async void BtnAgregarContrato_Click(object sender, RoutedEventArgs e)
         {
+            Contrato contrato = new Contrato();
+            try
+            {
+                contrato = ObtenerContrato();
+                if (contrato.Create())
+                {
+                    TxtNumeroContrato.Text = contrato.Numero;
+                    await this.ShowMessageAsync("Correcto!","Contraro Numero: "+contrato.Numero+" agregado correctamente!!");
+                }
 
+            }
+            catch (Exception ex)
+            {
+                await this.ShowMessageAsync("ERROR!","Error: "+ ex.Message);
+            }
         }
 
-        private void BtnActualizarContrato_Click(object sender, RoutedEventArgs e)
+        //boton para actualizar contrato
+        private async void BtnActualizarContrato_Click(object sender, RoutedEventArgs e)
         {
+            Contrato contrato = new Contrato();
+            try
+            {
 
+
+                if (contrato.Sincroniza(ObtenerContrato()))
+                {
+                    contrato.Numero = TxtNumeroContrato.Text;
+                    if (contrato.Update())
+                    {
+                        TxtNumeroContrato.Text = contrato.Numero;
+                        await this.ShowMessageAsync("Correcto!", "Contraro Numero: " + contrato.Numero + " actualizado correctamente!!");
+                    }
+                    else
+                    {
+                        await this.ShowMessageAsync("ERROR!", "Contraro Numero: " + contrato.Numero + " no pudo ser actualizado!!");
+                    }
+                }
+                else
+                {
+                    await this.ShowMessageAsync("ERROR!", "Contraro Numero: " + contrato.Numero + " no sincronizado!!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                await this.ShowMessageAsync("ERROR!", "Error: " + ex.Message);
+            }
         }
 
-        private void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
+        //boton para terminar contrato
+        private async void BtnEliminarContrato_Click(object sender, RoutedEventArgs e)
         {
-
+            Contrato contrato = new Contrato();
+            try
+            {
+                contrato = BuscarContratoNr(TxtNumeroContrato.Text);
+                contrato.FechaFinVigencia = DateTime.Today;
+                if (contrato.Update())
+                {
+                    await this.ShowMessageAsync("Terminado","Contrato numero: "+contrato.Numero+" a sido terminado");
+                }
+                else
+                {
+                    await this.ShowMessageAsync("No Terminado", "Contrato numero: " + contrato.Numero + " no a sido  terminado");
+                }
+                CargaContrato(contrato);
+            }
+            catch (Exception ex)
+            {
+                await this.ShowMessageAsync("ERROR!", "Error: " + ex.Message);
+            }
         }
 
         private void ChBContratoSalud_Checked(object sender, RoutedEventArgs e)
@@ -522,15 +642,13 @@ namespace BeLifeU3
 
         }
 
+        //click calcular resumen contrato
         private async void BtnCalcularResumeContrato_Click(object sender, RoutedEventArgs e)
         {
-            double PrimaAnual = 0.0d,PrimaMensual=0.0d;
+            
             try
             {
-                PrimaAnual = ObtenerPrima(ObtenerCliente(TxtContratoRut.Text));
-                PrimaMensual = (double)((Math.Truncate(PrimaAnual*10.0))/10.0)/12;
-                LbPrimaAnual.Content = PrimaAnual.ToString();
-                LbPrimaMensual.Content = PrimaMensual.ToString();
+                CargarResumenPlan();
             }
             catch (Exception ex)
             {

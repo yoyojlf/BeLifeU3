@@ -280,6 +280,20 @@ namespace NegocioBL
             }
             return contratos;
         }
+
+        //sincroniza
+        public bool Sincroniza(Contrato contrato)
+        {
+            try
+            {
+                CommonBC.Syncronize(contrato, this);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }
