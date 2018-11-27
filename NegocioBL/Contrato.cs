@@ -23,7 +23,7 @@ namespace NegocioBL
                 if (value >= FechaCreacion && value <= FechaCreacion.AddMonths(1))
                 {
                     fechaInicioVigencia = value;
-                    
+                    FinVigencia();
                 }
                 else
                 {
@@ -32,7 +32,27 @@ namespace NegocioBL
             }
         }
         public DateTime FechaFinVigencia { get; set; }
-        public bool Vigente { get; set; }
+        private bool vigente;
+        public bool Vigente {
+            get
+            {
+                return vigente;
+            }
+            set
+            {
+                if (value == true &&(DateTime.Today >= FechaFinVigencia || DateTime.Today <FechaInicioVigencia))
+                {
+                    vigente = false;
+                }
+                else
+                {
+                    if (value == false && (DateTime.Today < FechaFinVigencia || DateTime.Today >= FechaInicioVigencia))
+                    {
+                        vigente = true;
+                    }
+                }
+            }
+        }
         public bool DeclaracionSalud { get; set; }
         public double PrimaAnual { get; set; }
         public double PrimaMensual { get; set; }
@@ -57,6 +77,7 @@ namespace NegocioBL
             fechaInicioVigencia = new DateTime();
             FechaInicioVigencia = DateTime.Today;
             FechaFinVigencia = new DateTime();
+            FinVigencia();
             Vigente = false;
             DeclaracionSalud = false;
             PrimaAnual = 0f;
@@ -104,6 +125,7 @@ namespace NegocioBL
                 DatosDB.Contrato contrato = Conexion.Contexto.Contrato.First(c => c.Numero == Numero);
                 CommonBC.Syncronize(contrato, this);
                 this.LeerClientePlan();
+                this.Update();
                 return true;
             }
             catch (Exception ex)
@@ -124,6 +146,10 @@ namespace NegocioBL
                 //this.Sexo = Sex;
                 this.Cliente = RegClie;
             }
+            else
+            {
+                throw new ArgumentException("No puede crear un contrato a un Cliente no registrado!!!");
+            }
             NegocioBL.Plan RegPlan = new NegocioBL.Plan();
             RegPlan.IdPlan = this.CodigoPlan;
             if (RegPlan.Read())
@@ -133,6 +159,10 @@ namespace NegocioBL
                 //Est.Descripcion = RegEst.Descripcion;
                 //this.EstadoCivil = Est;
                 this.Plan = RegPlan;
+            }
+            else
+            {
+                throw new ArgumentException("Debe seleccionar un Plan para crear un contrato!!!");
             }
         }
         //Crear un nuevo contrato

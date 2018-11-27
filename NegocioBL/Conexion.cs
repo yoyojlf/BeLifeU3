@@ -7,20 +7,17 @@ using DatosDB;
 
 namespace NegocioBL
 {
-    public class Conexion
+    public static class Conexion
     {
         private static BeLifeEntities contexto;
 
-        public Conexion()
-        {
-                
-        }
+       
 
         public static BeLifeEntities Contexto
         {
             get
             {
-                if(contexto != null)
+                if(contexto == null)
                 {
                     contexto = new BeLifeEntities();
                 }

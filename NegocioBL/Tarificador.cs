@@ -71,6 +71,10 @@ namespace NegocioBL
                             Prima += 0.3d;
                             break;
                     }
+                    Double aux = (Prima * 10);
+                    aux = Math.Truncate(aux)+0.0;
+                    Prima = (aux / 10.0);
+
                 }
                 else
                 {
