@@ -49,13 +49,90 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comuna.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contrato.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EstadoCivil.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarcaModeloVehiculo.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarcaVehiculo.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelBeLife.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBeLife.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelBeLife.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelBeLife.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBeLife.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloVehiculo.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Plan.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Region.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegionComuna.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sexo.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoContrato.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vehiculo.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vivienda.cs">
+      <DependentUpon>ModelBeLife.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="ModelBeLife.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelBeLife.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="App.Config" />
+    <None Include="ModelBeLife.edmx.diagram">
+      <DependentUpon>ModelBeLife.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ModelBeLife.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelBeLife.edmx</DependentUpon>
+      <LastGenOutput>ModelBeLife.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelBeLife.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelBeLife.edmx</DependentUpon>
+      <LastGenOutput>ModelBeLife.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatosDB", "DatosDB\DatosDB.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NegocioBL", "NegocioBL\NegocioBL.csproj", "{CA09EACD-596C-435A-BAE1-DD1A959FD1AD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{FF9888F0-AEB6-4922-AE7A-491AD3CA7AC8}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Downloads\ET3 DEY3101\ET3 DEY3101_A - Anexo Script BBDD.sql = ..\..\..\Downloads\ET3 DEY3101\ET3 DEY3101_A - Anexo Script BBDD.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
