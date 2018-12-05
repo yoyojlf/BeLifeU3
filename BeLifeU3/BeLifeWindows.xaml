@@ -112,11 +112,14 @@
                             <DropShadowEffect/>
                         </TextBox.Effect>-->
                     </TextBox>
-                    <Controls:Tile Name="BtnBuscarContrato" Height="Auto" Width="Auto" Title="Buscar" Click="BtnBuscarContrato_Click" Margin="238,76,310,276" FontSize="11" TitleFontSize="12">
+                    <Controls:Tile Name="BtnBuscarContrato" Height="Auto" Width="Auto" Title="Buscar" Click="BtnBuscarContrato_Click" Margin="238,41,310,311" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Contrato_search.png"></Image>
                     </Controls:Tile>
-                    <Controls:Tile Name="BtnListaContrato" Height="Auto" Width="Auto" Title="Lista" Click="LisContratoWin_Click" Margin="238,135,310,217" FontSize="11" TitleFontSize="12">
+                    <Controls:Tile Name="BtnListaContrato" Height="Auto" Width="Auto" Title="Lista" Click="LisContratoWin_Click" Margin="238,88,310,264" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Contratos.png"></Image>
+                    </Controls:Tile>
+                    <Controls:Tile Name="BtnListaClienteContrato" Height="Auto" Width="Auto" Title="Lista" Click="ListClientesWin_Click" Margin="238,133,310,219" FontSize="11" TitleFontSize="12">
+                        <Image Source="Imagenes/Clientes.png"></Image>
                     </Controls:Tile>
                     <Label Content="Rut" RenderTransformOrigin="-0.054,0.535" Margin="53,109,591,246" />
                     <TextBox x:Name="TxtContratoRut" Controls:TextBoxHelper.ClearTextButton="True"  Controls:TextBoxHelper.Watermark="11111111-1" Margin="53,0,478,219" Height="26" VerticalAlignment="Bottom" MaxLines="1" MaxLength="10" TextChanged="TxtContratoRut_TextChanged" >

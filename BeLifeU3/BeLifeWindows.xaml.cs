@@ -23,9 +23,13 @@ namespace BeLifeU3
     /// </summary>
     public partial class BeLifeWindows : MetroWindow
     {
+        int IndexWin=-1;
+        string empresa = "Seguros BeLife ";
+        string modulo = "";
         public BeLifeWindows()
         {
             InitializeComponent();
+            this.Title = empresa;
             CargaComboBoxCliente();
             CargaCbContrato();
             Limpiar();
@@ -356,22 +360,45 @@ namespace BeLifeU3
         //cuando seleccione un cliente en La lista se importara a el mantenedor para ser modificado o eliminado
         private void DgClientes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int index = 0;
-            index = DgClientes.SelectedIndex;
-            if (index != -1)
+            if(IndexWin != -1)
             {
-                DgClientes.Items[index].ToString();
-                Cliente Clie = new Cliente();
-                Clie = (Cliente)DgClientes.Items[index];
-                this.Limpiar();
-                CargarCliente(Clie);
-                TbBeLife.SelectedIndex = 1;
-                //TxtRut.Text = Clie.RutCliente;
-                //TxtNombre.Text = Clie.Nombres;
-                //TxtApellido.Text = Clie.Apellidos;
-                //CbSexo.SelectedValue = Clie.Sexo.IdSexo;
-                //CbEstadoCivil.SelectedValue = Clie.EstadoCivil.IdEstadoCivil;
-                //DpFechaNacimiento.SelectedDate = Clie.FechaNacimiento;
+                int index = 0;
+                index = DgClientes.SelectedIndex;
+                if (index != -1)
+                {
+                    DgClientes.Items[index].ToString();
+                    Cliente Clie = new Cliente();
+                    Clie = (Cliente)DgClientes.Items[index];
+                    this.Limpiar();
+                    TxtContratoRut.Text = Clie.RutCliente;
+                    TbBeLife.SelectedIndex = IndexWin;
+                    //TxtRut.Text = Clie.RutCliente;
+                    //TxtNombre.Text = Clie.Nombres;
+                    //TxtApellido.Text = Clie.Apellidos;
+                    //CbSexo.SelectedValue = Clie.Sexo.IdSexo;
+                    //CbEstadoCivil.SelectedValue = Clie.EstadoCivil.IdEstadoCivil;
+                    //DpFechaNacimiento.SelectedDate = Clie.FechaNacimiento;
+                }
+            }
+            else
+            {
+                int index = 0;
+                index = DgClientes.SelectedIndex;
+                if (index != -1)
+                {
+                    DgClientes.Items[index].ToString();
+                    Cliente Clie = new Cliente();
+                    Clie = (Cliente)DgClientes.Items[index];
+                    this.Limpiar();
+                    CargarCliente(Clie);
+                    TbBeLife.SelectedIndex = 1;
+                    //TxtRut.Text = Clie.RutCliente;
+                    //TxtNombre.Text = Clie.Nombres;
+                    //TxtApellido.Text = Clie.Apellidos;
+                    //CbSexo.SelectedValue = Clie.Sexo.IdSexo;
+                    //CbEstadoCivil.SelectedValue = Clie.EstadoCivil.IdEstadoCivil;
+                    //DpFechaNacimiento.SelectedDate = Clie.FechaNacimiento;
+                }
             }
         }
 
@@ -406,6 +433,18 @@ namespace BeLifeU3
             CbContratoPlanes.SelectedValuePath = "IdPlan";
             CbContratoPlanes.DisplayMemberPath = "Nombre";
             CbContratoPlanes.Items.Refresh();
+
+            List<Plan> ListPlancito = new List<Plan>();
+            Plan PlanPoli = new Plan();
+            ListPlancito = plan.ReadAll();
+            PlanPoli.IdPlan = "0";
+            PlanPoli.PolizaActual = "No Filtrar";
+            ListPlancito.Add(PlanPoli);
+            CbPlanPoliza.ItemsSource = ListPlancito;
+            CbPlanPoliza.SelectedValuePath = "IdPlan";
+            CbPlanPoliza.DisplayMemberPath = "PolizaActual";
+            CbPlanPoliza.SelectedValue = "0";
+
         }
 
         //metodo para cargar datos de cliente en contrato
@@ -690,23 +729,39 @@ namespace BeLifeU3
 
         private void ListClientesWin_Click(object sender, RoutedEventArgs e)
         {
+            if(TbBeLife.SelectedIndex == 3)
+            {
+                IndexWin = 3;
+            }
+            else
+            {
+                IndexWin = -1;
+            }
+            modulo = "Lista Clientes";
             TbBeLife.SelectedIndex = 2;
+            this.Title = empresa+modulo;
         }
 
         private void ManClienteWin_Click(object sender, RoutedEventArgs e)
         {
+            modulo = "Mantenedor Cliente";
             TbBeLife.SelectedIndex = 1;
+            this.Title = empresa + modulo;
         }
 
         private void LisContratoWin_Click(object sender, RoutedEventArgs e)
         {
+            modulo = "Lista Contratos";
             TbBeLife.SelectedIndex = 4;
             CargarListaContratos();
+            this.Title = empresa + modulo;
         }
 
         private void ManContratoWin_Click(object sender, RoutedEventArgs e)
         {
+            modulo = "Mantenedor Contrato";
             TbBeLife.SelectedIndex = 3;
+            this.Title = empresa + modulo;
         }
 
         //Logica del filtro
@@ -740,7 +795,7 @@ namespace BeLifeU3
                     }
                     else
                     {
-                        if ((int)CbPlanPoliza.SelectedIndex > -1)
+                        if (CbPlanPoliza.SelectedIndex > -1 && CbPlanPoliza.SelectedValue.ToString() !="0")
                         {
                             DgContratos.ItemsSource = FiltroContra.ReadAll().Where(r => r.CodigoPlan == CbPlanPoliza.SelectedValue.ToString());
 
