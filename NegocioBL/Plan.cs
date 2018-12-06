@@ -9,6 +9,7 @@ namespace NegocioBL
     public class Plan
     {
         public string IdPlan { get; set; }
+        public int IdTipoContrato { get; set; }
         public string Nombre { get; set; }
         public double PrimaBase { get; set; }
         public string PolizaActual { get; set; }
@@ -16,6 +17,7 @@ namespace NegocioBL
         public Plan()
         {
             IdPlan = string.Empty;
+            IdTipoContrato = 0;
             Nombre = string.Empty;
             PrimaBase = 0.0;
             PolizaActual = string.Empty;
@@ -56,6 +58,25 @@ namespace NegocioBL
             }
         }
 
+        public List<Plan> ReadAllByTipCon()
+        {
+            try
+            {
+                var data = this.ReadAll().Where(t => t.IdTipoContrato == IdTipoContrato);
+                List<Plan> planes = new List<Plan>();
+                foreach(var plan in data)
+                {
+                    Plan newPlan = new Plan();
+
+                    CommonBC.Syncronize(plan, newPlan);
+                    planes.Add(newPlan);
+                }
+                return planes;
+            }catch(Exception ex)
+            {
+                return new List<Plan>();
+            }
+        }
         private List<Plan> GenerarListaPlanes(List<DatosDB.Plan> listaPlanBD)
         {
             List<Plan> ListaBC = new List<Plan>();

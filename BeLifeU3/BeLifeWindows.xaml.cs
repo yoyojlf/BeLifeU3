@@ -32,8 +32,12 @@ namespace BeLifeU3
             this.Title = empresa;
             CargaComboBoxCliente();
             CargaCbContrato();
+            CargaConTipoContrato();
             Limpiar();
+           
         }
+
+        
 
         #region Inicializa CB
         private void CargaComboBoxCliente()
@@ -432,6 +436,7 @@ namespace BeLifeU3
             CbContratoPlanes.ItemsSource = plan.ReadAll();
             CbContratoPlanes.SelectedValuePath = "IdPlan";
             CbContratoPlanes.DisplayMemberPath = "Nombre";
+            CbContratoPlanes.SelectedIndex = 0;
             CbContratoPlanes.Items.Refresh();
 
             List<Plan> ListPlancito = new List<Plan>();
@@ -476,7 +481,7 @@ namespace BeLifeU3
         //Obtener Prima
         private double ObtenerPrima(Cliente cliente)
         {
-            Tarificador tarificador = new Tarificador();
+            VidaTarificador tarificador = new VidaTarificador();
             tarificador.cliente = cliente;
             double Primaanual=-1;
             Plan plan = new Plan();
@@ -692,6 +697,42 @@ namespace BeLifeU3
             }
             
         }
+
+        //cargar combo tipo contrato
+        private void CargaConTipoContrato()
+        {
+            TipoContrato tipoContrato = new TipoContrato();
+            CbContraTipoContra.ItemsSource = tipoContrato.ReadAll();
+            CbContraTipoContra.SelectedValuePath = "IdTipoContrato";
+            CbContraTipoContra.DisplayMemberPath = "Descripcion";
+            CbContraTipoContra.Items.Refresh();
+        }
+
+        //cambio combo tipo contrato
+        private void CbContraTipoContra_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TipoContrato tipo = new TipoContrato();
+            
+            try
+            {
+                if (CbContraTipoContra.SelectedIndex != -1)
+                {
+                    
+                    tipo.IdTipoContrato = (int)CbContraTipoContra.SelectedValue;
+                    Plan plan = new Plan();
+                    plan.IdTipoContrato = tipo.IdTipoContrato;
+                    CbContratoPlanes.ItemsSource = plan.ReadAllByTipCon();
+                    CbContratoPlanes.SelectedValuePath = "IdPlan";
+                    CbContratoPlanes.DisplayMemberPath = "Nombre";
+                    CbContratoPlanes.SelectedIndex = 0;
+                    
+                }
+            }catch(Exception ex)
+            {
+                
+            }
+            
+        }
         #endregion
 
         #region Lista Contratos
@@ -825,5 +866,17 @@ namespace BeLifeU3
         {
             UltimateFilterContrato();
         }
+
+        private void TbBeLife_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IndexWin = TbBeLife.SelectedIndex;
+            if(IndexWin == 0)
+            {
+                modulo = "Home";
+                this.Title = empresa + modulo;
+            }
+        }
+
+        
     }
 }

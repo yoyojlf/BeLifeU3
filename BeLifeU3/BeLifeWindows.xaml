@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="BeLifeWindows" Height="450" Width="690" Background="Purple" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Controls:MetroTabControl Name="TbBeLife" >
+        <Controls:MetroTabControl Name="TbBeLife" SelectionChanged="TbBeLife_SelectionChanged">
             <Controls:MetroTabItem Margin="0,0,-59,0" Background="Purple" BorderBrush="White" Header="Home">
 
                 
@@ -112,13 +112,13 @@
                             <DropShadowEffect/>
                         </TextBox.Effect>-->
                     </TextBox>
-                    <Controls:Tile Name="BtnBuscarContrato" Height="Auto" Width="Auto" Title="Buscar" Click="BtnBuscarContrato_Click" Margin="238,41,310,311" FontSize="11" TitleFontSize="12">
+                    <Controls:Tile Name="BtnBuscarContrato" Height="Auto" Width="Auto" Title="Buscar" Click="BtnBuscarContrato_Click" Margin="238,19,310,333" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Contrato_search.png"></Image>
                     </Controls:Tile>
-                    <Controls:Tile Name="BtnListaContrato" Height="Auto" Width="Auto" Title="Lista" Click="LisContratoWin_Click" Margin="238,88,310,264" FontSize="11" TitleFontSize="12">
+                    <Controls:Tile Name="BtnListaContrato" Height="Auto" Width="Auto" Title="Lista" Click="LisContratoWin_Click" Margin="238,57,310,295" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Contratos.png"></Image>
                     </Controls:Tile>
-                    <Controls:Tile Name="BtnListaClienteContrato" Height="Auto" Width="Auto" Title="Lista" Click="ListClientesWin_Click" Margin="238,133,310,219" FontSize="11" TitleFontSize="12">
+                    <Controls:Tile Name="BtnListaClienteContrato" Height="Auto" Width="Auto" Title="Lista" Click="ListClientesWin_Click" Margin="238,97,310,255" FontSize="11" TitleFontSize="12">
                         <Image Source="Imagenes/Clientes.png"></Image>
                     </Controls:Tile>
                     <Label Content="Rut" RenderTransformOrigin="-0.054,0.535" Margin="53,109,591,246" />
@@ -133,15 +133,21 @@
                             <DropShadowEffect/>
                         </TextBox.Effect>-->
                     </TextBox>
-                    <Label  Content="Apellidos" Margin="238,163,373,191"/>
-                    <TextBox x:Name="TxtContratoApellido" RenderTransformOrigin="3.697,5.117" Margin="238,189,293,165" IsEnabled="False" Controls:TextBoxHelper.Watermark="No Apellido">
+                    <Label  Content="Apellidos" Margin="53,215,558,139"/>
+                    <TextBox x:Name="TxtContratoApellido" RenderTransformOrigin="3.697,5.117" Margin="53,241,478,113" IsEnabled="False" Controls:TextBoxHelper.Watermark="No Apellido">
                         <!--<TextBox.Effect>-->
                         <!--<DropShadowEffect/>
                         </TextBox.Effect>-->
                     </TextBox>
 
-                    <Label  Content="Plan" Margin="53,215,575,137"/>
-                    <ComboBox  x:Name="CbContratoPlanes" SelectedIndex="0" Margin="53,243,478,111" SelectionChanged="CbContratoPlanes_SelectionChanged" >
+                    <ComboBox  x:Name="CbContraTipoContra" Controls:TextBoxHelper.Watermark="Tipo Contrato" SelectedIndex="0" Margin="238,135,293,219" SelectionChanged="CbContraTipoContra_SelectionChanged" >
+                        <!--<ComboBox.Effect>
+                            <DropShadowEffect/>
+                        </ComboBox.Effect>-->
+                    </ComboBox>
+
+                    <Label  Content="Plan" Margin="238,161,390,191"/>
+                    <ComboBox  x:Name="CbContratoPlanes" SelectedIndex="0" Margin="238,189,293,165" SelectionChanged="CbContratoPlanes_SelectionChanged" >
                         <!--<ComboBox.Effect>
                             <DropShadowEffect/>
                         </ComboBox.Effect>-->

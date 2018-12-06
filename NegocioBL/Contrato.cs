@@ -13,6 +13,15 @@ namespace NegocioBL
         public DateTime FechaCreacion { get; set; }
         public string RutCliente { get; set; }
         public string CodigoPlan { get; set; }
+        public int IdTipoContrato { get; set; }
+
+        public bool DeclaracionSalud { get; set; }
+        public double PrimaAnual { get; set; }
+        public double PrimaMensual { get; set; }
+        public string Observaciones { get; set; }
+
+        public Cliente Cliente { get; set; }
+        public Plan Plan { get; set; }
         public DateTime FechaInicioVigencia {
             get
             {
@@ -60,13 +69,7 @@ namespace NegocioBL
                 }
             }
         }
-        public bool DeclaracionSalud { get; set; }
-        public double PrimaAnual { get; set; }
-        public double PrimaMensual { get; set; }
-        public string Observaciones { get; set; }
-
-        public Cliente Cliente { get; set; }
-        public Plan Plan { get; set; }
+       
 
         #region Constructor
         public Contrato()
@@ -130,6 +133,7 @@ namespace NegocioBL
             try
             {
                 DatosDB.Contrato contrato = Conexion.Contexto.Contrato.First(c => c.Numero == Numero);
+                
                 CommonBC.Syncronize(contrato, this);
                 this.LeerClientePlan();
                 this.Update();
