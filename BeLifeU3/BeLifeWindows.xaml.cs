@@ -479,25 +479,75 @@ namespace BeLifeU3
         }
 
         //Obtener Prima
-        private double ObtenerPrima(Cliente cliente)
+        private double ObtenerPrima()
         {
-            VidaTarificador tarificador = new VidaTarificador();
-            tarificador.cliente = cliente;
+            Tarificador tarificador;
+            double PrimaBase;
             double Primaanual=-1;
             Plan plan = new Plan();
-            if(CbContratoPlanes.SelectedIndex != -1)
+            int i=0;
+            try
             {
-                plan.IdPlan = CbContratoPlanes.SelectedValue.ToString();
-                plan.Read();
-                Primaanual = tarificador.CalcularPrimaBase(plan.PrimaBase);
-                LbContratoTipoPlan.Content = plan.Nombre;
-                LbPoliza.Content = plan.PolizaActual;
-            }
-            else
+                i = (int)CbContraTipoContra.SelectedValue;
+                try
+                {
+                    if (CbContratoPlanes.SelectedIndex != -1)
+                    {
+                        plan.IdPlan = CbContratoPlanes.SelectedValue.ToString();
+                        plan.Read();
+                        PrimaBase = plan.PrimaBase;
+
+                        LbContratoTipoPlan.Content = plan.Nombre;
+                        LbPoliza.Content = plan.PolizaActual;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Tiene que seleccionar un Plan antes de calcular la Prima!!!");
+                    }
+                    switch (i)
+                    {
+                        case 10:
+                            tarificador = new VidaTarificador();
+                            if(tarificador is VidaTarificador)
+                            {
+                                VidaTarificador vidaTarificador = (VidaTarificador)tarificador;
+                                vidaTarificador.cliente = this.ObtenerCliente(TxtContratoRut.Text);
+                                Primaanual = vidaTarificador.CalcularPrimaBase(PrimaBase);
+                            }
+                            break;
+                        case 20:
+                            tarificador = new VehiculoTarificador();
+                            if(tarificador is VehiculoTarificador)
+                            {
+                                VehiculoTarificador vehiculoTarificador = (VehiculoTarificador)tarificador;
+                                vehiculoTarificador.Cliente = this.ObtenerCliente(TxtContratoRut.Text);
+                                vehiculoTarificador.Vehiculo = this.ObtenerVehiculo();
+                                Primaanual = vehiculoTarificador.CalcularPrimaBase(PrimaBase);
+                            }
+                            break;
+                        case 30:
+                            tarificador = new ViviendaTarificador();
+                            if (tarificador is ViviendaTarificador)
+                            {
+                                ViviendaTarificador viviendaTarificador = (ViviendaTarificador)tarificador;
+                                viviendaTarificador.Vivienda = this.ObtenerVivienda();
+                                Primaanual = viviendaTarificador.CalcularPrimaBase(PrimaBase);
+                            }
+                            break;
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }catch(Exception ex)
             {
-                throw new ArgumentException("Tiene que seleccionar un Plan antes de calcular la Prima!!!");
+                throw new ArgumentException("tiene que seleccionar un tipo de contrato para calcular prima");
             }
-            return Primaanual;            
+
+            return Primaanual;
         }
 
         //Cargar Rssumen
@@ -515,6 +565,7 @@ namespace BeLifeU3
         {
             Contrato contrato = new Contrato();
             contrato.RutCliente = TxtContratoRut.Text;
+            contrato.IdTipoContrato = (int)CbContraTipoContra.SelectedValue;
             contrato.CodigoPlan = CbContratoPlanes.SelectedValue.ToString();
             contrato.DeclaracionSalud = ChBContratoSalud.IsChecked.Value;
             contrato.FechaInicioVigencia = DpContratoInicio.SelectedDate.Value;
@@ -599,15 +650,23 @@ namespace BeLifeU3
         //boton para agregar contrato
         private async void BtnAgregarContrato_Click(object sender, RoutedEventArgs e)
         {
-            Contrato contrato = new Contrato();
+            Contrato contrato;
             try
             {
                 contrato = ObtenerContrato();
-                if (contrato.Create())
+                switch ((int)CbContraTipoContra.SelectedValue)
                 {
-                    TxtNumeroContrato.Text = contrato.Numero;
-                    await this.ShowMessageAsync("Correcto!","Contraro Numero: "+contrato.Numero+" agregado correctamente!!");
+                    case 10:
+                        contrato = new Contrato();
+                        break;
+                    case 20:
+                        contrato = new ContratoVehiculo();
+                        break;
+                    case 30:
+                        contrato = new ContratoVivienda();
+                        break;
                 }
+                contrato = ObtenerContrato();
 
             }
             catch (Exception ex)
