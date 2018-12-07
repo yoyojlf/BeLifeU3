@@ -195,8 +195,36 @@
 
                             <!--<Run Text="Sin pre"/><Run Text="-"/><Run Text="exi"/><Run Text="s"/><Run Text="tencia"/>-->
                         </TextBox>
-
+                    
                     </Grid>
+                    <Controls:Flyout Position="Right" Width="370" Margin="0,0,0,86">
+                        <Grid>
+                            <Controls:MetroTabControl Name="TBContraDetalle">
+                                <Controls:MetroTabItem>
+                                    <Grid>
+                                        <TextBlock Background="Transparent" Text=" El  tipo de contrato Vida no tiene mas elementos" FontSize="16" ></TextBlock>
+                                    </Grid>
+                                </Controls:MetroTabItem>
+                                <Controls:MetroTabItem>
+                                    <Grid>
+                                        <TextBlock Background="Transparent" Text=" El  tipo de contrato Vida no tiene mas elementos" FontSize="16" ></TextBlock>
+                                    </Grid>
+                                </Controls:MetroTabItem>
+                                <Controls:MetroTabItem>
+                                    <Grid>
+                                        <Label Content="Pantente" Margin="10,0,272,189"/>
+                                        <TextBox Name="TxtContratoVePatente" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="AAAA11" MaxLength="6" Margin="10,25,208,163"></TextBox>
+                                        <Label Content="Año" Margin="181,0,101,189"/>
+                                        <TextBox Name="TxtContratoVeAnio" Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="1999" MaxLength="6" Margin="181,25,37,163"></TextBox>
+                                        <Label Content="Marca Vehiculo" Margin="10,74,261,115"/>
+                                        <ComboBox Name="CbContratoVeMarca" Controls:TextBoxHelper.Watermark="select Marca" Margin="10,99,208,89"></ComboBox>
+                                        <Label Content="Modelo Vehiculo" Margin="181,74,90,115"/>
+                                        <ComboBox Name="CbContratoVeModelo" Controls:TextBoxHelper.Watermark="select Modelo" Margin="181,99,37,89"></ComboBox>
+                                    </Grid>
+                                </Controls:MetroTabItem>
+                            </Controls:MetroTabControl>
+                        </Grid>                        
+                    </Controls:Flyout>
                 </Grid>
             </Controls:MetroTabItem>
             <Controls:MetroTabItem Background="Transparent" >

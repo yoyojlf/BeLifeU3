@@ -26,6 +26,7 @@ namespace BeLifeU3
         int IndexWin=-1;
         string empresa = "Seguros BeLife ";
         string modulo = "";
+        int IndexDeta;
         public BeLifeWindows()
         {
             InitializeComponent();
@@ -496,9 +497,6 @@ namespace BeLifeU3
                         plan.IdPlan = CbContratoPlanes.SelectedValue.ToString();
                         plan.Read();
                         PrimaBase = plan.PrimaBase;
-
-                        LbContratoTipoPlan.Content = plan.Nombre;
-                        LbPoliza.Content = plan.PolizaActual;
                     }
                     else
                     {
@@ -521,7 +519,7 @@ namespace BeLifeU3
                             {
                                 VehiculoTarificador vehiculoTarificador = (VehiculoTarificador)tarificador;
                                 vehiculoTarificador.Cliente = this.ObtenerCliente(TxtContratoRut.Text);
-                                vehiculoTarificador.Vehiculo = this.ObtenerVehiculo();
+                                vehiculoTarificador.Vehiculo = ObtenerVehiculo();
                                 Primaanual = vehiculoTarificador.CalcularPrimaBase(PrimaBase);
                             }
                             break;
@@ -530,12 +528,14 @@ namespace BeLifeU3
                             if (tarificador is ViviendaTarificador)
                             {
                                 ViviendaTarificador viviendaTarificador = (ViviendaTarificador)tarificador;
-                                viviendaTarificador.Vivienda = this.ObtenerVivienda();
+                                viviendaTarificador.Vivienda = ObtenerVivienda();
                                 Primaanual = viviendaTarificador.CalcularPrimaBase(PrimaBase);
                             }
                             break;
 
                     }
+                    LbContratoTipoPlan.Content = plan.Nombre;
+                    LbPoliza.Content = plan.PolizaActual;
 
                 }
                 catch (Exception ex)
@@ -550,11 +550,30 @@ namespace BeLifeU3
             return Primaanual;
         }
 
+        private Vivienda ObtenerVivienda()
+        {
+            throw new NotImplementedException();
+        }
+
+        private Vehiculo ObtenerVehiculo()
+        {
+            Vehiculo vehiculo = new Vehiculo();
+            if (!TxtContratoVePatente.Text.Equals(string.Empty) && !TxtContratoVeAnio.Text.Equals(string.Empty))
+            {
+                vehiculo.Patente = TxtContratoVePatente.Text;
+                vehiculo.Anho = int.Parse(TxtContratoVeAnio.Text);
+                vehiculo.IdMarca = (int)CbContratoVeMarca.SelectedValue;
+                vehiculo.IdModelo = (int)CbContratoVeModelo.SelectedValue;
+            }
+
+            return vehiculo;
+        }
+
         //Cargar Rssumen
         private void CargarResumenPlan()
         {
             double PrimaAnual = 0.0d, PrimaMensual = 0.0d;
-            PrimaAnual = ObtenerPrima(ObtenerCliente(TxtContratoRut.Text));
+            PrimaAnual = ObtenerPrima();
             PrimaMensual = (double)((Math.Truncate(PrimaAnual * 10.0)) / 10.0) / 12;
             LbPrimaAnual.Content = PrimaAnual.ToString();
             LbPrimaMensual.Content = PrimaMensual.ToString();
@@ -784,11 +803,14 @@ namespace BeLifeU3
                     CbContratoPlanes.SelectedValuePath = "IdPlan";
                     CbContratoPlanes.DisplayMemberPath = "Nombre";
                     CbContratoPlanes.SelectedIndex = 0;
+                    IndexDeta = tipo.IdTipoContrato / 10;
+                    TBContraDetalle.SelectedIndex = IndexDeta;
                     
                 }
             }catch(Exception ex)
             {
-                
+                IndexDeta = 0;
+                TBContraDetalle.SelectedIndex = IndexDeta;
             }
             
         }
